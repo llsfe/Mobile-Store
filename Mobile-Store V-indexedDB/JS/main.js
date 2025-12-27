@@ -963,7 +963,7 @@ function proceedToCheckout() {
   }
 
   const cartData = encodeURIComponent(JSON.stringify(cart));
-  window.location.href = `checkout.html?cart=${cartData}`;
+  window.location.href = `pages/checkout.html?cart=${cartData}`;
 }
 
 // ========== UI CONTROLS ==========
@@ -2079,3 +2079,4 @@ window.addEventListener('scroll', () => {
 
   lastScrollY = currentScrollY;
 });
+

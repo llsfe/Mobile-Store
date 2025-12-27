@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Returns & Refunds - Mobile Store</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../images/iconlogo.png">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<style>
+    .returns-hero {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        padding: 80px 5%;
+        text-align: center;
+        color: white;
+    }
+
+    .returns-hero h1 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    .returns-hero p {
+        font-size: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.95;
+    }
+
+    .returns-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 60px 5%;
+    }
+
+    .return-form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 50px;
+    }
+
+    .return-form-card h2 {
+        font-size: 28px;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+
+    .return-form-card p {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        background: white;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .policy-section {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+    }
+
+    .policy-section h2 {
+        font-size: 28px;
+        color: #1f2937;
+        margin-bottom: 20px;
+    }
+
+    .policy-section h3 {
+        font-size: 20px;
+        color: #1f2937;
+        margin-top: 25px;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+
+    .policy-section p,
+    .policy-section li {
+        color: #6b7280;
+        line-height: 1.8;
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .policy-section ul {
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+
+    .policy-section li {
+        margin-bottom: 8px;
+    }
+
+    .info-box {
+        background: #eff6ff;
+        border-left: 4px solid #2563eb;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    .info-box strong {
+        color: #1f2937;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .warning-box {
+        background: #fef3c7;
+        border-left: 4px solid #f59e0b;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    .warning-box strong {
+        color: #92400e;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .step-card {
+        background: #f9fafb;
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+        border-color: #2563eb;
+        transform: translateY(-3px);
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .step-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .step-description {
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .returns-hero h1 {
+            font-size: 36px;
+        }
+
+        .returns-hero p {
+            font-size: 16px;
+        }
+
+        .return-form-card,
+        .policy-section {
+            padding: 25px 20px;
+        }
+    }
+
+    /* Override action button expanding effect for this page only */
+    .action-btn:hover {
+        width: 48px !important;
+        padding: 0 !important;
+        border-radius: 10px !important;
+    }
+
+    .action-btn:hover .icon-label {
+        display: none !important;
+    }
+
+
+    /* Override action button expanding effect for this page only */
+    .action-btn:hover {
+        width: 48px !important;
+        padding: 0 !important;
+        border-radius: 10px !important;
+    }
+
+    .action-btn:hover .icon-label {
+        display: none !important;
+    }
+</style>
+</head>
+
+<body>
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <div class="top-banner">
+            Special offers on all phones! Up to 30% OFF
+            <a href="../index.html" style="cursor:pointer;">Shop Now</a>
+        </div>
+
+        <div class="main-header">
+            <div class="logo" onclick="window.location.href='../index.html'">
+                <img src="../images/mobile-logo.png" alt="Mobile Store Logo">
+                <span data-i18n="nav-brand-text">Mobile Store</span>
+            </div>
+
+
+
+            <div class="header-actions">
+                <!-- Account Button -->
+                <button class="action-btn" title="My Account" onclick="window.location.href='account.html'"
+                    aria-label="My Account">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </button>
+                <button class="action-btn" title="Back to Home" onclick="window.location.href='../index.html'"
+                    aria-label="Home">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="returns-hero">
+        <h1 data-i18n="returns-title">Returns & Refunds</h1>
+        <p data-i18n="returns-subtitle">Hassle-free returns within 14 days of delivery</p>
+    </section>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="returns-content">
+        <!-- Return Form -->
+        <div class="return-form-card">
+            <h2 data-i18n="returns-form-title">Initiate a Return</h2>
+            <p data-i18n="returns-form-desc">Fill out the form below to start your return process</p>
+
+            <form id="returnForm" onsubmit="handleReturnSubmit(event)">
+                <div class="form-group">
+                    <label for="orderNumber" data-i18n="returns-order-label">Order Number *</label>
+                    <input type="text" id="orderNumber" data-i18n-placeholder="returns-order-placeholder"
+                        placeholder="e.g., ORD-123456" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" data-i18n="returns-email-label">Email Address *</label>
+                    <input type="email" id="email" data-i18n-placeholder="returns-email-placeholder"
+                        placeholder="email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason" data-i18n="returns-reason-label">Reason for Return *</label>
+                    <select id="reason" required>
+                        <option value="" data-i18n="returns-reason-select">Select a reason</option>
+                        <option value="defective" data-i18n="returns-reason-defective">Defective Product</option>
+                        <option value="wrong-item" data-i18n="returns-reason-wrong">Wrong Item Received</option>
+                        <option value="not-as-described" data-i18n="returns-reason-described">Not as Described</option>
+                        <option value="changed-mind" data-i18n="returns-reason-mind">Changed Mind</option>
+                        <option value="other" data-i18n="returns-reason-other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="details" data-i18n="returns-details-label">Additional Details</label>
+                    <textarea id="details" data-i18n-placeholder="returns-details-placeholder"
+                        placeholder="Please provide any additional information about your return..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="9 11 12 14 22 4"></polyline>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <span data-i18n="returns-submit-btn">Submit Return Request</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Return Process Steps -->
+        <div class="policy-section">
+            <h2 data-i18n="returns-process-title">How to Return Your Order</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title" data-i18n="returns-step1-title">Submit Request</div>
+                    <div class="step-description" data-i18n="returns-step1-desc">Fill out the return form above with
+                        your order details and reason for
+                        return.
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title" data-i18n="returns-step2-title">Get Approval</div>
+                    <div class="step-description" data-i18n="returns-step2-desc">We'll review your request and send you
+                        a return shipping label via
+                        email within
+                        24 hours.</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title" data-i18n="returns-step3-title">Pack & Ship</div>
+                    <div class="step-description" data-i18n="returns-step3-desc">Pack the item securely with all
+                        accessories and drop it off at the
+                        designated
+                        courier location.</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-title" data-i18n="returns-step4-title">Get Refund</div>
+                    <div class="step-description" data-i18n="returns-step4-desc">Once we receive and inspect the return,
+                        your refund will be processed
+                        within
+                        5-7 business days.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Return Policy -->
+        <div class="policy-section">
+            <h2 data-i18n="returns-policy-title">Return Policy</h2>
+
+            <h3 data-i18n="returns-eligibility-title">Eligibility</h3>
+            <p data-i18n="returns-eligibility-desc">To be eligible for a return, your item must meet the following
+                conditions:</p>
+            <ul>
+                <li data-i18n="returns-eligibility-1">Returned within 14 days of delivery</li>
+                <li data-i18n="returns-eligibility-2">In its original condition with all accessories, packaging, and
+                    documentation</li>
+                <li data-i18n="returns-eligibility-3">Unused and undamaged (except for defective items)</li>
+                <li data-i18n="returns-eligibility-4">IMEI/Serial number matches the original purchase</li>
+            </ul>
+
+            <div class="info-box">
+                <strong data-i18n="returns-free-title">Free Returns for Defective Items</strong>
+                <span data-i18n="returns-free-desc">If your item is defective or damaged upon arrival, we'll cover all
+                    return shipping costs. Just contact
+                    our
+                    customer service team within 48 hours of delivery.</span>
+            </div>
+
+            <h3 data-i18n="returns-nonreturnable-title">Non-Returnable Items</h3>
+            <p data-i18n="returns-nonreturnable-desc">The following items cannot be returned:</p>
+            <ul>
+                <li data-i18n="returns-nonreturnable-1">Items returned after 14 days from delivery</li>
+                <li data-i18n="returns-nonreturnable-2">Items with broken seals or activated warranties (unless
+                    defective)</li>
+                <li data-i18n="returns-nonreturnable-3">Items with physical damage caused by misuse</li>
+                <li data-i18n="returns-nonreturnable-4">Items missing original packaging or accessories</li>
+            </ul>
+
+            <h3 data-i18n="returns-refund-title">Refund Process</h3>
+            <p data-i18n="returns-refund-desc">Once your return is received and inspected, we will:</p>
+            <ul>
+                <li data-i18n="returns-refund-1">Send you an email notification confirming receipt</li>
+                <li data-i18n="returns-refund-2">Inspect the item within 2-3 business days</li>
+                <li data-i18n="returns-refund-3">Process your refund to the original payment method</li>
+                <li data-i18n="returns-refund-4">Refunds typically appear in your account within 5-7 business days</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong data-i18n="returns-restocking-title">Restocking Fee</strong>
+                <span data-i18n="returns-restocking-desc">A 10% restocking fee may apply for change-of-mind returns on
+                    opened items. Defective items and wrong
+                    shipments
+                    are exempt from this fee.</span>
+            </div>
+
+            <h3 data-i18n="returns-exchanges-title">Exchanges</h3>
+            <p data-i18n="returns-exchanges-desc">We currently don't offer direct exchanges. If you need a different
+                item, please return the original
+                product for
+                a refund and place a new order for the item you want.</p>
+
+            <h3 data-i18n="returns-contact-title">Contact Us</h3>
+            <p data-i18n="returns-contact-desc">If you have any questions about our return policy or need assistance
+                with a return, please contact our
+                customer
+                service team:</p>
+            <ul>
+                <li><strong data-i18n="returns-contact-phone">Phone:</strong> <span
+                        data-i18n="returns-contact-phone-value">+20 123 456 7890 (24/7)</span></li>
+                <li><strong data-i18n="returns-contact-email">Email:</strong> <span
+                        data-i18n="returns-contact-email-value">info@mobilestore.com</span></li>
+                <li><strong data-i18n="returns-contact-response">Response Time:</strong> <span
+                        data-i18n="returns-contact-response-value">Within 1-3 hours</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3 data-i18n="footer-brand">Mobile Store</h3>
+                <p data-i18n="footer-about">Your trusted destination for premium smartphones and accessories in Egypt.
+                </p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg></a>
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg></a>
+                    <a href="#" aria-label="X"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4 data-i18n="footer-quick">Quick Links</h4>
+                <a href="../index.html" data-i18n="footer-home">Home</a>
+                <a href="../index.html" data-i18n="footer-hot-deals">Hot Deals</a>
+                <a href="about.html" data-i18n="footer-about-us">About Us</a>
+                <a href="contact.html" data-i18n="footer-contact-link">Contact</a>
+            </div>
+
+            <div class="footer-column">
+                <h4 data-i18n="footer-service">Customer Service</h4>
+                <a href="track-order.html" data-i18n="footer-track">Track Order</a>
+                <a href="shipping.html" data-i18n="footer-shipping">Shipping Info</a>
+                <a href="returns.html" data-i18n="footer-returns">Returns</a>
+                <a href="faq.html" data-i18n="footer-faq">FAQ</a>
+            </div>
+
+            <div class="footer-column">
+                <h4 data-i18n="footer-contact">Contact Us</h4>
+                <p>
+                    <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+                        viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span data-i18n="footer-location">Cairo, Egypt</span>
+                </p>
+                <p>
+                    <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    +20 123 456 7890
+                </p>
+                <p>
+                    <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+                        viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    info@mobilestore.com
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p data-i18n="footer-copyright">&copy; 2025 Mobile Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function handleReturnSubmit(event) {
+            event.preventDefault();
+
+            const orderNumber = document.getElementById('orderNumber').value;
+            const email = document.getElementById('email').value;
+            const reason = document.getElementById('reason').value;
+            const details = document.getElementById('details').value;
+
+            // Simulate form submission
+            alert(`Return request submitted!\n\nOrder: ${orderNumber}\nEmail: ${email}\nReason: ${reason}\n\nYou will receive a return shipping label via email within 24 hours.`);
+
+            // Reset form
+            document.getElementById('returnForm').reset();
+        }
+    </script>
+
+    <!-- Translation Scripts -->
+    <script src="../JS/translations.js"></script>
+    <script src="../JS/data.js"></script>
+    <script src="../JS/main.js"></script>
+</body>
+
+</html>

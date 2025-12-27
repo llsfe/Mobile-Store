@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Store - Best Phones & Deals</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/iconlogo.png">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <!-- Top Banner -->
+    <div class="top-banner">
+      <span data-i18n="banner-text">Special offers on all phones! Up to 30% OFF</span>
+      <a onclick="filterProducts('deals')" style="cursor:pointer;" data-i18n="shop-now">Shop Now</a>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+      <!-- Logo -->
+      <div class="logo" onclick="goToHome()">
+        <img src="images/mobile-logo.png" alt="Mobile Store Logo">
+        <span data-i18n="nav-brand-text">Mobile Store</span>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search for your favorite phone..."
+          aria-label="Search products" data-i18n="search-placeholder">
+        <button class="search-btn" onclick="searchProducts()" aria-label="Search">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Language Switcher -->
+        <button class="action-btn" onclick="toggleLanguage()" aria-label="Toggle Language" title="Change Language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="icon-label" data-i18n="header-lang">Language</span>
+        </button>
+        <!-- Wishlist Button -->
+        <button class="action-btn" title="Wishlist" onclick="toggleWishlist()" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          <span class="icon-label" data-i18n="wishlist-title">Wishlist</span>
+          <span class="badge" id="wishlistCount">0</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button class="action-btn" title="Shopping Cart" onclick="toggleCart()" aria-label="Shopping Cart">
+          <svg viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span class="icon-label" data-i18n="cart-title">Shopping Cart</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+
+        <!-- Account Button -->
+        <button class="action-btn" title="My Account" onclick="goToAccount()" aria-label="My Account">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="icon-label" data-i18n="account-title">My Account</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu" id="navMenu">
+      <a class="nav-link" data-category="home" data-i18n="nav-home">Home</a>
+      <a class="nav-link" data-category="all" data-i18n="nav-all">All Phones</a>
+      <a class="nav-link" data-category="apple" data-i18n="nav-brand-apple">Apple</a>
+      <a class="nav-link" data-category="samsung" data-i18n="nav-brand-samsung">Samsung</a>
+      <a class="nav-link" data-category="xiaomi" data-i18n="nav-brand-xiaomi">Xiaomi</a>
+      <a class="nav-link" data-category="OPPO" data-i18n="nav-brand-oppo">Oppo</a>
+
+      <!-- More Dropdown -->
+      <div class="nav-dropdown">
+        <button class="nav-link nav-more-btn" onclick="toggleMoreMenu(event)">
+          <span data-i18n="nav-more">More</span>
+          <svg class="more-arrow" viewBox="0 0 24 24">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="nav-dropdown-menu" id="moreMenu">
+          <a class="nav-dropdown-link" data-category="Realme" data-i18n="nav-brand-realme">Realme</a>
+          <a class="nav-dropdown-link" data-category="ONEPLUS" data-i18n="nav-brand-oneplus">OnePlus</a>
+          <a class="nav-dropdown-link" data-category="HONOR" data-i18n="nav-brand-honor">Honor</a>
+          <a class="nav-dropdown-link" data-category="Vivo" data-i18n="nav-brand-vivo">Vivo</a>
+          <a class="nav-dropdown-link" data-category="GOOGLE PIXEL" data-i18n="nav-brand-google">Google Pixel</a>
+          <a class="nav-dropdown-link" data-category="NOTHING" data-i18n="nav-brand-nothing">Nothing</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <div class="main-content">
+
+    <section class="hero-section">
+      <div class="hero-slider" id="heroSlider">
+        <div class="hero-slide active">
+          <video class="hero-video" autoplay muted loop playsinline>
+            <source src="videos/hero-video-1.mp4" type="video/mp4">
+            <source src="videos/hero-video-1.webm" type="video/webm">
+          </video>
+          <div class="hero-overlay"></div>
+          <div class="slide-content">
+            <p class="slide-tag" data-i18n="hero-tag">Limited Offer!</p>
+            <h2 data-i18n="hero-title">The Next Generation of Smartphones</h2>
+            <h1 data-i18n="hero-product-name">iPhone 17 Pro Max</h1>
+            <a href="javascript:filterProducts('all')" class="shop-now-btn">
+              <span data-i18n="hero-btn">Shop Now</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FEATURES SECTION ========== -->
+    <section class="features-section">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+            <line x1="12" y1="22.08" x2="12" y2="12" />
+          </svg>
+        </div>
+        <h3 data-i18n="feat-shipping">Free Shipping</h3>
+        <p data-i18n="feat-shipping-desc">Free delivery on orders over 1000 EGP across Egypt</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        </div>
+        <h3 data-i18n="feat-support">24/7 Support</h3>
+        <p data-i18n="feat-support-desc">Round-the-clock customer service for your convenience</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <h3 data-i18n="feat-secure">Secure Payment</h3>
+        <p data-i18n="feat-secure-desc">100% secure transactions with encrypted payment</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        </div>
+        <h3 data-i18n="feat-warranty">Warranty</h3>
+        <p data-i18n="feat-warranty-desc">Official warranty on all products up to 2 years</p>
+      </div>
+    </section>
+
+    <section class="brands-section">
+      <div class="brand-card" onclick="filterProducts('apple')">
+        <img src="images/apple.logo.png " alt="Apple Logo">
+        <h3 data-i18n="brand-apple">Apple</h3>
+        <p data-i18n="brand-apple-desc">Explore iPhones</p>
+      </div>
+      <div class="brand-card" onclick="filterProducts('samsung')">
+        <img src="images/Samsung-logo.jpg" alt="Samsung Logo">
+        <h3 data-i18n="brand-samsung">Samsung</h3>
+        <p data-i18n="brand-samsung-desc">Android Flagships</p>
+      </div>
+      <div class="brand-card" onclick="filterProducts('xiaomi')">
+        <img src="images/Xiaomi_logo.png" alt="Xiaomi Logo">
+        <h3 data-i18n="brand-xiaomi">Xiaomi</h3>
+        <p data-i18n="brand-xiaomi-desc">Best Value</p>
+      </div>
+    </section>
+
+    <!-- ========== POPULAR CATEGORIES ========== -->
+    <section class="categories-section">
+      <div class="section-title">
+        <h2 data-i18n="cat-title">Shop by Category</h2>
+        <p data-i18n="cat-desc">Find the perfect device for your needs</p>
+      </div>
+
+      <div class="categories-grid">
+        <div class="category-item" onclick="filterProducts('all')">
+          <div class="category-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg>
+          </div>
+          <h4 data-i18n="cat-all">All Smartphones</h4>
+          <span class="category-count" data-i18n="cat-all-desc">50+ Models</span>
+        </div>
+
+        <div class="category-item" onclick="filterMultipleBrands(['apple', 'samsung'])">
+          <div class="category-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+          </div>
+          <h4 data-i18n="cat-premium">Premium Phones</h4>
+          <span class="category-count" data-i18n="cat-premium-desc">Apple & Samsung</span>
+        </div>
+
+        <div class="category-item"
+          onclick="filterByPriceRange(0, 20000, 'Budget Friendly', 'Best phones under 20,000 EGP')">
+          <div class="category-icon">
+            <svg viewBox="0 0 24 24">
+              <line x1="12" y1="1" x2="12" y2="23" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <h4 data-i18n="cat-budget">Budget Friendly</h4>
+          <span class="category-count" data-i18n="cat-budget-desc">Best Value</span>
+        </div>
+
+        <div class="category-item" onclick="filterProducts('deals')">
+          <div class="category-icon">
+            <svg viewBox="0 0 24 24">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </div>
+          <h4 data-i18n="cat-deals">Hot Deals</h4>
+          <span class="category-count" data-i18n="cat-deals-desc">Up to 30% OFF</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="testimonials-section">
+      <div class="section-title">
+        <h2 data-i18n="test-title">What Our Customers Say</h2>
+        <p data-i18n="test-desc">Trusted by thousands of happy customers</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">
+            <span>⭐⭐⭐⭐⭐</span>
+          </div>
+          <p class="testimonial-text" data-i18n="test-1-text">"Great shopping experience! The device performs perfectly,
+            and the delivery
+            was
+            super fast, The packaging was neat. Will buy again for sure!"</p>
+          <div class="customer-info">
+            <div class="customer-avatar">A</div>
+            <div>
+              <h4 data-i18n="test-1-name">Abdulrahman</h4>
+              <p data-i18n="test-1-loc">Cairo, Egypt</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">
+            <span>⭐⭐⭐⭐⭐</span>
+          </div>
+          <p class="testimonial-text" data-i18n="test-2-text">"Best mobile store in Egypt! Great customer support and
+            authentic products.
+            Highly
+            recommended for anyone looking for quality phones."</p>
+          <div class="customer-info">
+            <div class="customer-avatar">K</div>
+            <div>
+              <h4 data-i18n="test-2-name">Karam</h4>
+              <p data-i18n="test-2-loc">Alexandria, Egypt</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">
+            <span>⭐⭐⭐⭐⭐</span>
+          </div>
+          <p class="testimonial-text" data-i18n="test-3-text">"Excellent experience! The Samsung S24 Ultra I purchased
+            works perfectly. Fast
+            shipping and great packaging. Will definitely shop again!"</p>
+          <div class="customer-info">
+            <div class="customer-avatar">W</div>
+            <div>
+              <h4 data-i18n="test-3-name">Walled</h4>
+              <p data-i18n="test-3-loc">Giza, Egypt</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== NEWSLETTER ========== -->
+    <section class="newsletter-section">
+      <div class="newsletter-content">
+        <div class="newsletter-text">
+          <h2 data-i18n="newsletter-title">Subscribe to Our Newsletter</h2>
+          <p data-i18n="newsletter-desc">Get exclusive deals, new arrivals and special offers directly to your inbox</p>
+        </div>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" placeholder="Enter your email address" data-i18n="newsletter-placeholder" required>
+          <button type="submit" data-i18n="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+    <div id="products-list-container" style="display: none;">
+      <div class="section-header">
+        <h1 id="sectionTitle">Our Best Sellers</h1>
+        <p id="sectionDesc">Discover the latest and most powerful smart devices this season.</p>
+      </div>
+
+      <!-- Filter Toggle Button -->
+      <button class="filter-toggle-btn" onclick="openFilterPopup()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+        <span data-i18n="filter-btn">Filter Products</span>
+      </button>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid"></div>
+
+      <!-- FILTER POPUP -->
+      <div class="filter-popup-overlay" id="filterPopup" onclick="closeFilterPopupOutside(event)">
+        <div class="filter-popup-content" onclick="event.stopPropagation()">
+          <!-- Popup Header -->
+          <div class="filter-popup-header">
+            <h2>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              <span data-i18n="filter-title">Filter Products</span>
+            </h2>
+            <button class="filter-popup-close" onclick="closeFilterPopup()">
+              <svg viewBox="0 0 24 24">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Popup Body -->
+          <div class="filter-popup-body">
+            <div class="filter-grid">
+              <!-- Brand Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                  </svg>
+                  <span data-i18n="filter-brand">Brand</span>
+                </div>
+                <div class="filter-options" id="brandFilters"></div>
+              </div>
+
+              <!-- RAM Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+                  </svg>
+                  <span data-i18n="filter-ram">RAM</span>
+                </div>
+                <div class="filter-options" id="ramFilters"></div>
+              </div>
+
+              <!-- Storage Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                  </svg>
+                  <span data-i18n="filter-storage">Storage</span>
+                </div>
+                <div class="filter-options" id="storageFilters"></div>
+              </div>
+              <!-- Network Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                  </svg>
+                  <span data-i18n="filter-network">Network</span>
+                </div>
+                <div class="filter-options" id="networkFilters"></div>
+              </div>
+
+              <!-- Camera Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                    </path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                  </svg>
+                  <span data-i18n="filter-camera">Camera</span>
+                </div>
+                <div class="filter-options" id="cameraFilters"></div>
+              </div>
+
+              <!-- Battery Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="6" width="18" height="12" rx="2" ry="2"></rect>
+                    <line x1="23" y1="13" x2="23" y2="11"></line>
+                  </svg>
+                  <span data-i18n="filter-battery">Battery</span>
+                </div>
+                <div class="filter-options" id="batteryFilters"></div>
+              </div>
+
+              <!-- Camera Filter -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                  </svg>
+                  <span data-i18n="filter-status">Status</span>
+                </div>
+                <div class="filter-options" id="statusFilters"></div>
+              </div>
+
+              <!-- Sort By -->
+              <div class="filter-section">
+                <div class="filter-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                  </svg>
+                  <span data-i18n="filter-sort">Sort By</span>
+                </div>
+                <select class="filter-sort-select" id="sortSelect">
+                  <option value="default" data-i18n="sort-default">Default</option>
+                  <option value="price-asc" data-i18n="sort-price-asc">Price: Low to High</option>
+                  <option value="price-desc" data-i18n="sort-price-desc">Price: High to Low</option>
+                  <option value="name-asc" data-i18n="sort-name-asc">Name: A - Z</option>
+                  <option value="name-desc" data-i18n="sort-name-desc">Name: Z - A</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Price Range (Full Width) -->
+            <div class="filter-section" style="margin-top: 30px; grid-column: 1 / -1;">
+              <div class="filter-section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                <span data-i18n="filter-price">Price Range</span>
+              </div>
+              <div class="price-range-container">
+                <div class="range-slider">
+                  <div class="range-selected" id="rangeSelected"></div>
+                </div>
+                <div class="range-input">
+                  <input type="range" class="min-range" id="minRange" min="0" max="100000" value="0" step="1000">
+                  <input type="range" class="max-range" id="maxRange" min="0" max="100000" value="100000" step="1000">
+                </div>
+                <div class="price-inputs">
+                  <div class="price-input-wrapper">
+                    <label class="price-label" data-i18n="price-min">Min Price</label>
+                    <input type="number" class="min-input" id="minInput" value="0" min="0" max="100000" placeholder="0">
+                  </div>
+                  <div class="price-input-wrapper">
+                    <label class="price-label" data-i18n="price-max">Max Price</label>
+                    <input type="number" class="max-input" id="maxInput" value="100000" min="0" max="100000"
+                      placeholder="100000">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Popup Footer -->
+          <div class="filter-popup-footer">
+            <button class="filter-reset-btn" onclick="resetFilters()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              <span data-i18n="filter-reset">Reset Filters</span>
+            </button>
+            <button class="filter-apply-btn" onclick="applyFiltersAndClose()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span data-i18n="filter-apply">Apply Filters</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3 data-i18n="footer-store-name">Mobile Store</h3>
+        <p data-i18n="footer-about">Your trusted destination for premium smartphones and accessories in Egypt.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg></a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer-quick">Quick Links</h4>
+        <a href="index.html" data-i18n="footer-home">Home</a>
+        <a href="#" onclick="filterProducts('deals')" data-i18n="footer-hot-deals">Hot Deals</a>
+        <a href="pages/about.html" data-i18n="footer-about-us">About Us</a>
+        <a href="pages/contact.html" data-i18n="footer-contact-link">Contact</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer-service">Customer Service</h4>
+        <a href="pages/track-order.html" data-i18n="footer-track">Track Order</a>
+        <a href="pages/shipping.html" data-i18n="footer-shipping">Shipping Info</a>
+        <a href="pages/returns.html" data-i18n="footer-returns">Returns</a>
+        <a href="pages/faq.html" data-i18n="footer-faq">FAQ</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer-contact">Contact Us</h4>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span data-i18n="footer-location">Cairo, Egypt</span>
+        </p>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          +20 123 456 7890
+        </p>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          info@mobilestore.com
+        </p>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span data-i18n="footer-hours">9 AM - 10 PM (Daily)</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p data-i18n="footer-copyright">&copy; 2025 Mobile Store. All rights reserved.</p>
+    </div>
+  </footer>
+  <!-- ========== WISHLIST POPUP ========== -->
+  <div class="popup-overlay" id="wishlistPopup" onclick="closePopupOutside(event, 'wishlistPopup')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <h2>
+          <svg style="width: 24px; height: 24px; stroke: #ef4444; fill: #ef4444; stroke-width: 2;" viewBox="0 0 24 24">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          <span data-i18n="wishlist-title">My Wishlist</span>
+        </h2>
+        <button class="close-popup" onclick="closePopup('wishlistPopup')" aria-label="Close">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="popup-body" id="wishlistItems"></div>
+    </div>
+  </div>
+
+  <!-- ========== CART POPUP ========== -->
+  <div class="popup-overlay" id="cartPopup" onclick="closePopupOutside(event, 'cartPopup')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <h2>
+          <svg style="width: 24px; height: 24px; stroke: #2563eb; stroke-width: 2; fill: none;" viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span data-i18n="cart-title">Shopping Cart</span>
+        </h2>
+        <button class="close-popup" onclick="closePopup('cartPopup')" aria-label="Close">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="popup-body" id="cartItems"></div>
+    </div>
+  </div>
+
+  <!-- ========== ACCOUNT POPUP ========== -->
+  <div class="popup-overlay" id="accountPopup" onclick="closePopupOutside(event, 'accountPopup')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <h2>
+          <svg style="width: 24px; height: 24px; stroke: #2563eb; stroke-width: 2; fill: none;" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span data-i18n="account-title">My Account</span>
+        </h2>
+        <button class="close-popup" onclick="closePopup('accountPopup')" aria-label="Close">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="popup-body">
+        <!-- Auth Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuthTab('signin')" data-i18n="account-signin">Sign In</button>
+          <button class="auth-tab" onclick="switchAuthTab('signup')" data-i18n="account-create">Create Account</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <form class="auth-form active" id="signinForm" onsubmit="handleSignIn(event)">
+          <div class="form-group">
+            <label for="signinEmail" data-i18n="account-email">Email Address</label>
+            <input type="email" id="signinEmail" placeholder="Enter your email"
+              data-i18n-placeholder="placeholder-email" required>
+          </div>
+          <div class="form-group">
+            <label for="signinPassword" data-i18n="account-password">Password</label>
+            <input type="password" id="signinPassword" placeholder="Enter your password"
+              data-i18n-placeholder="placeholder-password" required>
+          </div>
+          <button type="submit" class="form-submit-btn" data-i18n="btn-signin">Sign In</button>
+          <div class="form-footer">
+            <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 600;"
+              data-i18n="account-forgot">Forgot Password?</a>
+          </div>
+          <div class="divider" data-i18n="account-or">OR</div>
+          <div class="social-login">
+            <button type="button" class="social-btn" onclick="socialLogin('google')">
+              <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24">
+                <path fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+              </svg>
+              <span data-i18n="account-google">Google</span>
+            </button>
+
+          </div>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form class="auth-form" id="signupForm" onsubmit="handleSignUp(event)">
+          <div class="form-group">
+            <label for="signupName" data-i18n="account-name">Full Name</label>
+            <input type="text" id="signupName" placeholder="Enter your full name"
+              data-i18n-placeholder="placeholder-name" required>
+          </div>
+          <div class="form-group">
+            <label for="signupEmail" data-i18n="account-email">Email Address</label>
+            <input type="email" id="signupEmail" placeholder="Enter your email"
+              data-i18n-placeholder="placeholder-email" required>
+          </div>
+          <div class="form-group">
+            <label for="signupPassword" data-i18n="account-password">Password</label>
+            <input type="password" id="signupPassword" placeholder="Create a password"
+              data-i18n-placeholder="placeholder-password" required minlength="5">
+          </div>
+          <div class="form-group">
+            <label for="signupConfirmPassword" data-i18n="account-confirm-password">Confirm Password</label>
+            <input type="password" id="signupConfirmPassword" placeholder="Confirm your password"
+              data-i18n-placeholder="placeholder-confirm-password" required minlength="5">
+          </div>
+          <button type="submit" class="form-submit-btn" data-i18n="btn-create-account">Create Account</button>
+          <div class="form-footer" data-i18n="account-terms">
+            By creating an account, you agree to our Terms & Conditions
+          </div>
+          <div class="divider" data-i18n="account-or">OR</div>
+          <div class="social-login">
+            <button type="button" class="social-btn" onclick="socialLogin('google')">
+              <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24">
+                <path fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+              </svg>
+              <span data-i18n="account-google">Google</span>
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- ========== PRODUCT DETAILS POPUP ========== -->
+  <div class="popup-overlay" id="productDetailsPopup" onclick="closePopupOutside(event, 'productDetailsPopup')">
+    <div class="popup-content product-details-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <h2>
+          <svg style="width: 24px; height: 24px; stroke: #2563eb; stroke-width: 2; fill: none;" viewBox="0 0 24 24">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+            <line x1="12" y1="18" x2="12.01" y2="18" />
+          </svg>
+          <span data-i18n="product-details-title">Product Details</span>
+        </h2>
+        <button class="close-popup" onclick="closePopup('productDetailsPopup')" aria-label="Close">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="popup-body product-details-body" id="productDetailsBody">
+      </div>
+    </div>
+
+    <script src="JS/translations.js"></script>
+    <script src="JS/db.js"></script>
+    <script src="JS/data.js"></script>
+    <script src="JS/main.js"></script>
+</body>
+
+</html>

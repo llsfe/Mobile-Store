@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - Mobile Store</title>
+  <link rel="icon" type="image/png" href="../images/iconlogo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="../CSS/style.css">
+
+</head>
+
+<body>
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <!-- Top Banner -->
+    <div class="top-banner">
+      <span data-i18n="banner-text">Special offers on all phones! Up to 30% OFF</span>
+      <a onclick="clearScrollState(); window.location.href='../index.html'; filterProducts('deals')"
+        style="cursor:pointer;" data-i18n="shop-now">Shop Now</a>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+      <!-- Logo -->
+      <div class="logo" onclick="clearScrollState(); window.location.href='../index.html'">
+        <img src="../images/mobile-logo.png" alt="Mobile Store Logo">
+        <span data-i18n="nav-brand-text">Mobile Store</span>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search for your favorite phone..."
+          aria-label="Search products" data-i18n="search-placeholder">
+        <button class="search-btn" onclick="searchProducts()" aria-label="Search">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Language Switcher -->
+        <button class="action-btn" onclick="toggleLanguage()" aria-label="Toggle Language" title="Change Language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="icon-label" data-i18n="header-lang">Language</span>
+        </button>
+        <!-- Wishlist Button -->
+        <button class="action-btn" title="Wishlist" onclick="toggleWishlist()" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          <span class="icon-label" data-i18n="wishlist-title">Wishlist</span>
+          <span class="badge" id="wishlistCount">0</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button class="action-btn" title="Shopping Cart" onclick="toggleCart()" aria-label="Shopping Cart">
+          <svg viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span class="icon-label" data-i18n="cart-title">Shopping Cart</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+
+        <!-- Account Button -->
+        <button class="action-btn" title="My Account" onclick="goToAccount()" aria-label="My Account">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="icon-label" data-i18n="account-title">My Account</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- ========== PRODUCT DETAILS CONTENT ========== -->
+  <div class="product-details-page" style="max-width: 1400px; margin: 0 auto; padding: 40px 5%; min-height: 80vh;">
+    <button class="back-btn" onclick="goBack()" data-i18n="back-btn">Back</button>
+
+    <div id="productDetailsContainer"
+      style="background: white; border-radius: 16px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); min-height: 400px;">
+      <!-- Product details will be loaded here -->
+      <div id="loadingIndicator"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; text-align: center;">
+        <div class="professional-loader">
+          <div class="loader-ring"></div>
+          <div class="loader-ring"></div>
+          <div class="loader-ring"></div>
+          <div class="loader-ring"></div>
+        </div>
+        <p style="color: #6b7280; font-size: 18px; font-weight: 500; margin-top: 30px;" data-i18n="loading-product">
+          Loading product details...</p>
+        <div style="display: flex; gap: 8px; margin-top: 20px; justify-content: center;">
+          <div class="loading-dot" style="animation-delay: 0s;"></div>
+          <div class="loading-dot" style="animation-delay: 0.2s;"></div>
+          <div class="loading-dot" style="animation-delay: 0.4s;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3 data-i18n="footer-store-name">Mobile Store</h3>
+        <p data-i18n="footer-about">Your trusted destination for premium smartphones and accessories in Egypt.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg></a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer-quick">Quick Links</h4>
+        <a href="../index.html" onclick="clearScrollState()" data-i18n="footer-home">Home</a>
+        <a href="#" onclick="clearScrollState(); window.location.href='../index.html'; filterProducts('deals')"
+          data-i18n="footer-hot-deals">Hot Deals</a>
+        <a href="about.html" data-i18n="footer-about-us">About Us</a>
+        <a href="contact.html" data-i18n="footer-contact-link">Contact</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer-service">Customer Service</h4>
+        <a href="track-order.html" data-i18n="footer-track">Track Order</a>
+        <a href="shipping.html" data-i18n="footer-shipping">Shipping Info</a>
+        <a href="returns.html" data-i18n="footer-returns">Returns</a>
+        <a href="faq.html" data-i18n="footer-faq">FAQ</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer-contact">Contact Us</h4>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span data-i18n="footer-location">Cairo, Egypt</span>
+        </p>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          +20 123 456 7890
+        </p>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          info@mobilestore.com
+        </p>
+        <p>
+          <svg
+            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+            viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span data-i18n="footer-hours">9 AM - 10 PM (Daily)</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p data-i18n="footer-copyright">&copy; 2025 Mobile Store. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ========== CART POPUP ========== -->
+  <div class="popup-overlay" id="cartPopup" onclick="closePopupOutside(event, 'cartPopup')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <h2>
+          <svg style="width: 24px; height: 24px; stroke: #2563eb; stroke-width: 2; fill: none;" viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span data-i18n="cart-title">Shopping Cart</span>
+        </h2>
+        <button class="close-popup" onclick="closePopup('cartPopup')" aria-label="Close">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="popup-body" id="cartItems"></div>
+    </div>
+  </div>
+
+  <!-- ========== WISHLIST POPUP ========== -->
+  <div class="popup-overlay" id="wishlistPopup" onclick="closePopupOutside(event, 'wishlistPopup')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <div class="popup-header">
+        <h2>
+          <svg style="width: 24px; height: 24px; stroke: #ef4444; fill: #ef4444; stroke-width: 2;" viewBox="0 0 24 24">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          <span data-i18n="wishlist-title">My Wishlist</span>
+        </h2>
+        <button class="close-popup" onclick="closePopup('wishlistPopup')" aria-label="Close">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="popup-body" id="wishlistItems"></div>
+    </div>
+  </div>
+
+  <style>
+    .product-details-page {
+      background: #f8f9fa;
+    }
+
+    .back-btn {
+      background: #f3f4f6;
+      color: #1f2937;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #2563eb;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .back-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Professional Loading Animation */
+    .professional-loader {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+
+    .loader-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 4px solid transparent;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: loader-rotate 1.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    }
+
+    .loader-ring:nth-child(1) {
+      animation-delay: -0.15s;
+      border-top-color: #2563eb;
+    }
+
+    .loader-ring:nth-child(2) {
+      animation-delay: -0.3s;
+      border-top-color: #3b82f6;
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+    }
+
+    .loader-ring:nth-child(3) {
+      animation-delay: -0.45s;
+      border-top-color: #60a5fa;
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+    }
+
+    .loader-ring:nth-child(4) {
+      animation-delay: -0.6s;
+      border-top-color: #93c5fd;
+      width: 40%;
+      height: 40%;
+      top: 30%;
+      left: 30%;
+    }
+
+    @keyframes loader-rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      animation: loading-bounce 1.4s ease-in-out infinite both;
+    }
+
+    @keyframes loading-bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+        opacity: 0.5;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product-details-page {
+        padding: 20px;
+      }
+
+      #productDetailsContainer {
+        padding: 20px;
+      }
+
+      .professional-loader {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
+
+  <script src="../JS/translations.js"></script>
+  <script src="../JS/db.js"></script>
+  <script src="../JS/data.js"></script>
+  <script src="../JS/main.js"></script>
+  <script>
+    // Load product details when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+      loadProductDetails();
+    });
+
+    // Function to go back to previous page
+    function goBack() {
+      // Get stored previous page from sessionStorage
+      const storedPage = sessionStorage.getItem('lastProductPage');
+
+      if (storedPage && storedPage !== window.location.href) {
+        // Use stored page (most reliable)
+        window.location.href = storedPage;
+      } else if (document.referrer && document.referrer.includes(window.location.origin) && document.referrer !== window.location.href) {
+        // Use referrer if stored page not available
+        window.location.href = document.referrer;
+      } else {
+        // Fallback: try history.back() or go to home
+        try {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = '../index.html';
+          }
+        } catch (e) {
+          window.location.href = '../index.html';
+        }
+      }
+    }
+
+    function loadProductDetails() {
+      // Get product ID from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = parseInt(urlParams.get('id'));
+
+      if (!productId || !products || products.length === 0) {
+        document.getElementById('productDetailsContainer').innerHTML = `
+          <div style="text-align: center; padding: 60px 20px;">
+            <h2 style="color: #ef4444; margin-bottom: 20px;" data-i18n="product-not-found">Product not found</h2>
+            <button onclick="window.location.href='../index.html'" style="background: #2563eb; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">
+              <span data-i18n="back-to-home">Back to Home</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const product = products.find(p => p.id === productId);
+      if (!product) {
+        document.getElementById('productDetailsContainer').innerHTML = `
+          <div style="text-align: center; padding: 60px 20px;">
+            <h2 style="color: #ef4444; margin-bottom: 20px;" data-i18n="product-not-found">Product not found</h2>
+            <button onclick="window.location.href='../index.html'" style="background: #2563eb; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">
+              <span data-i18n="back-to-home">Back to Home</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      // Render product details
+      renderProductDetails(product);
+    }
+
+    function renderProductDetails(product) {
+      const currentLang = localStorage.getItem('lang') || 'en';
+      const container = document.getElementById('productDetailsContainer');
+
+      // Calculate discount
+      let discount = '';
+      if (product.oldPrice) {
+        const discountPercent = Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100);
+        discount = `<span class="detail-discount">-${discountPercent}%</span>`;
+      }
+
+      // Rating
+      const rating = product.rating || 4.5;
+      const reviews = product.reviews || 0;
+      const stars = '⭐'.repeat(Math.floor(rating));
+
+      // Check wishlist
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const isInWishlist = wishlist.some(item => item.id === product.id);
+
+      // Check for detailed specs
+      const hasDetailedSpecs = product.detailedSpecs;
+      const productColorsLocalized = (currentLang === 'ar' && product.colorsAr) ? product.colorsAr : product.colors;
+      const productColorsEnglish = product.colors || [];
+      const hasColors = productColorsLocalized && productColorsLocalized.length > 0;
+
+      // Get description
+      const description = (currentLang === 'ar' && product.descriptionAr)
+        ? product.descriptionAr
+        : (product.description || translations[currentLang]['detail-no-description']);
+
+      const productName = (currentLang === 'ar' && product.nameAr) ? product.nameAr : product.name;
+
+      // Initialize color selection
+      let currentDetailSelectedColor = null;
+      if (hasColors) {
+        currentDetailSelectedColor = productColorsEnglish[0];
+      }
+
+      // Get translated badge
+      const badgeText = translations[currentLang][`badge-${product.badgeType}`] || product.badge;
+
+      // Render HTML
+      container.innerHTML = `
+        <div class="product-detail-hero">
+          <div class="product-detail-image">
+            <span class="product-detail-badge ${product.badgeType}">${badgeText}</span>
+            <img src="../${product.image}" alt="${productName}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80'">
+          </div>
+          
+          <div class="product-detail-info">
+            <div class="product-detail-brand">${product.brand}</div>
+            <h3 class="product-detail-name">${productName}</h3>
+            
+            <div class="product-detail-rating">
+              <span class="rating-stars">${stars}</span>
+              <span class="rating-text">${rating}/5 (${reviews} ${translations[currentLang]['detail-reviews']})</span>
+            </div>
+            
+            <div class="product-detail-price">
+              <span class="detail-current-price">${product.price.toLocaleString()} EGP</span>
+              ${product.oldPrice ? `<span class="detail-old-price">${product.oldPrice.toLocaleString()} EGP</span>` : ''}
+              ${discount}
+            </div>
+            
+            <p class="product-detail-description">${description}</p>
+            
+            <div class="product-detail-stock">
+              <svg style="width: 20px; height: 20px; stroke: ${product.inStock !== false ? '#10b981' : '#ef4444'}; fill: none; stroke-width: 2;" viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span class="${product.inStock !== false ? 'stock-available' : 'stock-unavailable'}">
+                ${product.inStock !== false ? translations[currentLang]['detail-in-stock'] : translations[currentLang]['detail-out-of-stock']}
+              </span>
+            </div>
+
+            <div class="product-detail-actions">
+              ${product.inStock !== false ? `
+              <button class="detail-add-cart-btn" onclick="addToCart(${product.id}, window.currentSelectedColor || null); showAddToCartFeedback();">
+                <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: white; fill: none; stroke-width: 2;">
+                  <circle cx="9" cy="21" r="1"/>
+                  <circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                ${translations[currentLang]['btn-add-to-cart']}
+              </button>
+              <button class="detail-wishlist-btn ${isInWishlist ? 'active' : ''}" onclick="toggleWishlistItem(${product.id}); location.reload();">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+              ` : `
+              <button class="detail-add-cart-btn" 
+                      style="${isInWishlist ? 'background: #9ca3af;' : 'background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);'}" 
+                      onclick="toggleWishlistItem(${product.id}); location.reload();">
+                <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: white; fill: none; stroke-width: 2;">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                ${isInWishlist ? translations[currentLang]['btn-added-to-wishlist'] : translations[currentLang]['btn-add-to-wishlist']}
+              </button>
+              `}
+            </div>
+          </div>
+        </div>
+        
+        <div class="product-detail-tabs">
+          <div class="detail-tabs-nav">
+            <button class="detail-tab-btn active" onclick="switchDetailTab(event, 'specs')">${translations[currentLang]['detail-specifications']}</button>
+            ${hasColors ? `<button class="detail-tab-btn" onclick="switchDetailTab(event, 'colors')">${translations[currentLang]['detail-colors']}</button>` : ''}
+            <button class="detail-tab-btn" onclick="switchDetailTab(event, 'shipping')">${translations[currentLang]['detail-shipping']}</button>
+          </div>
+          
+          <div class="detail-tab-content active" id="detail-tab-specs">
+            ${hasDetailedSpecs ? `
+              <div class="specs-grid">
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-processor']}</div>
+                  <div class="spec-value">${product.detailedSpecs.processor}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-ram']}</div>
+                  <div class="spec-value">${product.detailedSpecs.ram}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-storage']}</div>
+                  <div class="spec-value">${product.detailedSpecs.storage}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-network']}</div>
+                  <div class="spec-value">${product.detailedSpecs.network}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-display']}</div>
+                  <div class="spec-value">${product.detailedSpecs.screen}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-battery']}</div>
+                  <div class="spec-value">${product.detailedSpecs.battery}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-rear-camera']}</div>
+                  <div class="spec-value">${product.detailedSpecs.camera}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-front-camera']}</div>
+                  <div class="spec-value">${product.detailedSpecs.frontCamera}</div>
+                </div>
+                <div class="spec-item-detail">
+                  <div class="spec-label">${translations[currentLang]['detail-os']}</div>
+                  <div class="spec-value">${product.detailedSpecs.os}</div>
+                </div>
+              </div>
+            ` : `
+              <div class="specs-grid">
+                ${product.specs.map(spec => `
+                  <div class="spec-item-detail">
+                    <div class="spec-value">${spec}</div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+          
+          ${hasColors ? `
+            <div class="detail-tab-content" id="detail-tab-colors">
+              <div class="colors-list">
+                ${productColorsLocalized.map((colorName, index) => {
+        const originalColorName = productColorsEnglish[index] || colorName;
+        const isSelected = originalColorName === currentDetailSelectedColor;
+        const bgStyle = (typeof getColorStyle !== 'undefined' && getColorStyle) ? getColorStyle(originalColorName) : getColorStyleHelper(originalColorName);
+
+        return `
+                    <div class="color-option ${isSelected ? 'selected' : ''}" 
+                         data-color-bg="${bgStyle}"
+                         onclick="selectColorOnPage('${originalColorName}', this)"
+                         title="${colorName}"
+                         style="${isSelected ? `background-color: ${bgStyle}; color: #ffffff;` : ''}">
+                         <span class="color-text">${colorName}</span>
+                         ${isSelected ? '<span class="color-check">✓</span>' : ''}
+                    </div>
+                  `;
+      }).join('')}
+              </div>
+            </div>
+          ` : ''}
+          
+          <div class="detail-tab-content" id="detail-tab-shipping">
+            <div class="shipping-info">
+              <h4>
+                <svg style="width: 24px; height: 24px; stroke: #2563eb; fill: none; stroke-width: 2;" viewBox="0 0 24 24">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+                ${translations[currentLang]['detail-shipping-info']}
+              </h4>
+              <p><strong>${translations[currentLang]['detail-delivery-time']}</strong> ${product.delivery || translations[currentLang]['detail-business-days']}</p>
+              <p><strong>${translations[currentLang]['detail-shipping-label']}</strong> ${product.freeShipping !== false ? translations[currentLang]['detail-free-shipping'] : translations[currentLang]['detail-shipping-fee']}</p>
+              <p><strong>${translations[currentLang]['detail-delivery-label']}</strong> ${translations[currentLang]['detail-delivery-info']}</p>
+              <p><strong>${translations[currentLang]['detail-warranty-label']}</strong> ${translations[currentLang]['detail-warranty-info']}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Initialize color selection
+      window.currentSelectedColor = currentDetailSelectedColor;
+
+      // Hide loading indicator
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+      }
+
+      // Apply translations
+      if (typeof applyTranslations === 'function') {
+        applyTranslations();
+      }
+    }
+
+    // Color selection function for product details page
+    function selectColorOnPage(color, element) {
+      window.currentSelectedColor = color;
+
+      // Visual update
+      document.querySelectorAll('.color-option').forEach(el => {
+        el.classList.remove('selected');
+        el.style.backgroundColor = '';
+        el.style.color = '';
+        const checkSpan = el.querySelector('.color-check');
+        if (checkSpan) checkSpan.remove();
+      });
+
+      if (element) {
+        element.classList.add('selected');
+        const bgStyle = element.getAttribute('data-color-bg');
+        element.style.backgroundColor = bgStyle;
+        element.style.color = '#ffffff';
+
+        const checkSpan = document.createElement('span');
+        checkSpan.className = 'color-check';
+        checkSpan.textContent = '✓';
+        element.appendChild(checkSpan);
+      }
+    }
+
+    // Helper function for color styling (in case main.js is not loaded yet)
+    function getColorStyleHelper(colorName) {
+      if (!colorName) return '#ccc';
+      const lowerColor = colorName.toLowerCase();
+
+      if (lowerColor.includes('black') || lowerColor.includes('dark')) return '#000';
+      if (lowerColor.includes('white') || lowerColor.includes('light')) return '#f5f5f5';
+      if (lowerColor.includes('blue') || lowerColor.includes('navy')) return '#3b82f6';
+      if (lowerColor.includes('red') || lowerColor.includes('crimson')) return '#ef4444';
+      if (lowerColor.includes('green') || lowerColor.includes('emerald')) return '#10b981';
+      if (lowerColor.includes('yellow') || lowerColor.includes('gold') || lowerColor.includes('amber')) return '#eab308';
+      if (lowerColor.includes('purple') || lowerColor.includes('violet') || lowerColor.includes('lavender')) return '#8b5cf6';
+      if (lowerColor.includes('pink') || lowerColor.includes('rose')) return '#ec4899';
+      if (lowerColor.includes('orange')) return '#f97316';
+      if (lowerColor.includes('gray') || lowerColor.includes('grey') || lowerColor.includes('silver') || lowerColor.includes('titanium')) return '#9ca3af';
+      if (lowerColor.includes('cream') || lowerColor.includes('beige')) return '#fdf5e6';
+
+      return '#ccc';
+    }
+
+    // Tab switching function
+    function switchDetailTab(event, tabName) {
+      document.querySelectorAll('.detail-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.querySelectorAll('.detail-tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      event.target.classList.add('active');
+
+      const contentId = `detail-tab-${tabName}`;
+      const content = document.getElementById(contentId);
+      if (content) {
+        content.classList.add('active');
+      }
+    }
+
+    // Clear scroll state when explicitly navigating to home (not back)
+    function clearScrollState() {
+      sessionStorage.removeItem('returningFromDetails');
+      sessionStorage.removeItem('homeScrollPosition');
+    }
+  </script>
+</body>
+
+</html>

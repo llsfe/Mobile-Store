@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Mobile Store</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../images/iconlogo.png">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/style.css">
+
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 80px 5%;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .about-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 5%;
+        }
+
+        .about-section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #6b7280;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 35px;
+            border-radius: 16px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: #2563eb;
+            background: white;
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .value-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .value-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .value-description {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .team-section {
+            background: #f9fafb;
+            padding: 60px 5%;
+            margin: 80px 0;
+        }
+
+        .story-content {
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            font-size: 16px;
+            color: #4b5563;
+        }
+
+        .story-content p {
+            margin-bottom: 20px;
+        }
+
+        .story-content strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 36px;
+            }
+
+            .about-hero p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .story-content {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Override action button expanding effect for this page only */
+        .action-btn:hover {
+            width: 48px !important;
+            padding: 0 !important;
+            border-radius: 10px !important;
+        }
+
+        .action-btn:hover .icon-label {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <!-- Top Banner -->
+        <div class="top-banner">
+            Special offers on all phones! Up to 30% OFF
+            <a href="../index.html" style="cursor:pointer;">Shop Now</a>
+        </div>
+
+        <!-- Main Header -->
+        <div class="main-header">
+            <!-- Logo -->
+            <div class="logo" onclick="window.location.href='../index.html'">
+                <img src="../images/mobile-logo.png" alt="Mobile Store Logo">
+                <span data-i18n="nav-brand-text">Mobile Store</span>
+            </div>
+
+
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <!-- Account Button -->
+                <button class="action-btn" title="My Account" onclick="window.location.href='account.html'"
+                    aria-label="My Account">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </button>
+                <button class="action-btn" title="Back to Home" onclick="window.location.href='../index.html'"
+                    aria-label="Home">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="about-hero">
+        <h1 data-i18n="about-hero-title">About Mobile Store</h1>
+        <p data-i18n="about-hero-subtitle">Your trusted destination for premium smartphones and accessories in Egypt
+            since 2020</p>
+    </section>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="about-content">
+        <!-- Our Story -->
+        <section class="about-section">
+            <h2 class="section-title" data-i18n="about-story-title">Our Story</h2>
+            <p class="section-subtitle" data-i18n="about-story-subtitle">Building Egypt's most trusted mobile phone
+                marketplace</p>
+            <div class="story-content">
+                <p data-i18n="about-story-p1">
+                    <strong>Mobile Store</strong> was founded in 2020 with a simple mission: to make premium smartphones
+                    accessible to everyone in Egypt. What started as a small shop in Cairo has grown into one of the
+                    country's
+                    most trusted online mobile phone retailers.
+                </p>
+                <p data-i18n="about-story-p2">
+                    We understand that buying a smartphone is a significant investment. That's why we're committed to
+                    providing
+                    not just the best products, but also the best customer experience. Every phone we sell comes with an
+                    official
+                    warranty, and our customer service team is available 24/7 to assist you.
+                </p>
+                <p data-i18n="about-story-p3">
+                    Today, we serve thousands of happy customers across Egypt, from Cairo to Alexandria, Giza to Aswan.
+                    Our
+                    success is built on trust, quality, and an unwavering commitment to customer satisfaction.
+                </p>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="about-section">
+            <h2 class="section-title" data-i18n="about-impact-title">Our Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label" data-i18n="about-stat-customers">Happy Customers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label" data-i18n="about-stat-models">Phone Models</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label" data-i18n="about-stat-satisfaction">Satisfaction Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label" data-i18n="about-stat-support">Customer Support</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Values -->
+        <section class="about-section">
+            <h2 class="section-title" data-i18n="about-values-title">Our Values</h2>
+            <p class="section-subtitle" data-i18n="about-values-subtitle">The principles that guide everything we do</p>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3 class="value-title" data-i18n="about-value1-title">Trust & Authenticity</h3>
+                    <p class="value-description" data-i18n="about-value1-desc">
+                        We only sell 100% authentic products with official warranties. Every phone is verified and comes
+                        from
+                        authorized distributors.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <h3 class="value-title" data-i18n="about-value2-title">Customer First</h3>
+                    <p class="value-description" data-i18n="about-value2-desc">
+                        Your satisfaction is our priority. Our 24/7 support team is always ready to help with any
+                        questions or
+                        concerns.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <h3 class="value-title" data-i18n="about-value3-title">Fast & Reliable</h3>
+                    <p class="value-description" data-i18n="about-value3-desc">
+                        Free shipping on orders over 1000 EGP with fast delivery across Egypt. Track your order every
+                        step of the
+                        way.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    </div>
+                    <h3 class="value-title" data-i18n="about-value4-title">Best Prices</h3>
+                    <p class="value-description" data-i18n="about-value4-desc">
+                        Competitive pricing with regular deals and discounts. Get premium phones at prices that won't
+                        break the
+                        bank.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    <h3 class="value-title" data-i18n="about-value5-title">Quality Assurance</h3>
+                    <p class="value-description" data-i18n="about-value5-desc">
+                        Every device undergoes rigorous quality checks before shipping. We ensure you receive your phone
+                        in perfect
+                        condition.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                        </svg>
+                    </div>
+                    <h3 class="value-title" data-i18n="about-value6-title">Secure Shopping</h3>
+                    <p class="value-description" data-i18n="about-value6-desc">
+                        Your data is protected with industry-standard encryption. Shop with confidence knowing your
+                        information is
+                        safe.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3 data-i18n="footer-brand">Mobile Store</h3>
+                <p data-i18n="footer-about">Your trusted destination for premium smartphones and accessories in Egypt.
+                </p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg></a>
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg></a>
+                    <a href="#" aria-label="X"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4 data-i18n="footer-quick">Quick Links</h4>
+                <a href="../index.html" data-i18n="footer-home">Home</a>
+                <a href="../index.html" data-i18n="footer-hot-deals">Hot Deals</a>
+                <a href="about.html" data-i18n="footer-about-us">About Us</a>
+                <a href="contact.html" data-i18n="footer-contact-link">Contact</a>
+            </div>
+
+            <div class="footer-column">
+                <h4 data-i18n="footer-service">Customer Service</h4>
+                <a href="track-order.html" data-i18n="footer-track">Track Order</a>
+                <a href="shipping.html" data-i18n="footer-shipping">Shipping Info</a>
+                <a href="returns.html" data-i18n="footer-returns">Returns</a>
+                <a href="faq.html" data-i18n="footer-faq">FAQ</a>
+            </div>
+
+            <div class="footer-column">
+                <h4 data-i18n="footer-contact">Contact Us</h4>
+                <p>
+                    <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+                        viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    Cairo, Egypt
+                </p>
+                <p>
+                    <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    +20 123 456 7890
+                </p>
+                <p>
+                    <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 8px; stroke: #2563eb; fill: none; stroke-width: 2;"
+                        viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    info@mobilestore.com
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p data-i18n="footer-copyright">&copy; 2025 Mobile Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Translation Scripts -->
+    <script src="../JS/translations.js"></script>
+    <script src="../JS/main.js"></script>
+</body>
+
+</html>

@@ -805,6 +805,6 @@ SOFTWARE.
   
   ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=sNGUP.Mobile-Store)
   
-  © 2025 Mobile Store.
+  © 2026 Mobile Store.
   
 </div>
